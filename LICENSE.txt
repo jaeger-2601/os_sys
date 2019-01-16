@@ -1,4 +1,4 @@
-﻿include:
+include:
 
     introduction
     
@@ -56,3 +56,4 @@ license:
 home:
     plz visit my one website there you can post evry program for python that you want:
     https://python-libs-com.webnode.nl/
+
