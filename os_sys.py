@@ -1,23 +1,58 @@
 import os
 import sys
 import subprocess as sub
-__all__ = ['main_dir', 'get_import_list(module)', 'get_user()', 'cmd(command)', 'info(module)', 'win_version()', 'cmd_filter_haak(command) filters the ([{}]) from cmd outputs', 'filter_regel(cmd_command_or_data) replace \\n with a real \n', 'cmd_out_list(command_or_data) replace \\n with \n and make a list with as split \\n',
-           'cmd_out(command_or_data) replace \\n with a real \n', ['__class_name__: ColorPrint', 'print_fail(message)', 'print_pass(message)', 'print_warn(message)',
-                                                                   'print_info(message)', 'print_bold(message)'],
-           'info()', 'is_connected()', 'ping()', 'connect_time()', 'internet()',
-           'chek_speed()', 'internet_and_speed()', 'cmd_ping()', 'cmd(command)',
-           'ping_data(times_repeat, task_typ_print_to_print_and_return_and_return_for_only_return)', 'replace(string, old, new)', 'open_site(url)'
-           'is_even(int)', 'is_oneven(int) is not even?', 'fahr_to_celsius(temp)', 'celsius_to_kelvin(temp_c)', 'fahr_to_kelvin(temp_f)', 'convert_c_to_f(temp)'
-           ]
+try:
+    import fail as f
+except ModuleNotFoundError:
+    try:
+        import os_sys.fail as f
+    except ModuleNotFoundError:
+        import os_sys_.fail as f
+
+import time as __time__
+def chek(a):
+        b = __time__.time()
+        c = b - a
+        return c
+def loading(duur):
+        a = __time__.time()
+        while chek(a) < duur:
+                print('|', end='')
+                sleep(0.1)
+        print(end='\n')
+
+
 __all_names__ = ['main_dir', 'get_import_list', 'get_user', 'cmd', 'info', 'win_version', 'cmd_filter_haak', 'filter_regel', 'cmd_out_list',
-           'cmd_out', 'ColorPrint.print_fail', 'ColorPrint.print_pass', 'ColorPrint.print_warn',
-                                                                   'ColorPrint.print_info', 'ColorPrint.print_bold',
-           'info', 'is_connected', 'ping', 'connect_time', 'internet',
+           'cmd_out', 'ColorPrint', 'info', 'is_connected', 'ping', 'connect_time', 'internet',
            'chek_speed', 'internet_and_speed', 'cmd_ping', 'cmd',
-           'ping_data', 'replace', 'open_site'
+           'ping_data', 'replace', 'open_site', 'explorer_dict', 'explorer',
            'is_even', 'is_oneven', 'fahr_to_celsius', 'celsius_to_kelvin', 'fahr_to_kelvin', 'convert_c_to_f'
            ]
+__all__ = __all_names__
 main_dir = os.path.split(os.path.abspath(__file__))[0]
+
+from tkinter import Tk
+from tkinter.filedialog import askopenfilename
+Tk().withdraw() # we don't want a full GUI, so keep the root window from appearing
+
+def explorer_dict():
+    filename = askopenfilename() # show an "Open" dialog box and return the path to the selected file
+    path_split = filename.split('\\')
+    le = int(len(path_split) - 1)
+    file = path_split[le]
+    path_list = list()
+    index = 0
+    while index < le:
+        index += 1
+        path_list.append(path_split[index])
+    path = ''.join(path_list)
+    return {'filepath': filename, 'file': file, 'path': path,\
+            'path_list': path_list, 'list': [file, filename, path, path_list]}
+def explorer():
+    filename = askopenfilename()
+    return filename
+
+    
 def get_import_list(module):
     get_list = list(module.__all__)
     return get_list
@@ -570,7 +605,6 @@ def convert_c_to_f(temp):
 
 import os
 print(os.path.abspath(''))
-
 
 
 
