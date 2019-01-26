@@ -1,42 +1,35 @@
 from subprocess import *
 import socket
 import socket as s
-from time import *
 import time as _time
+import subprocess
+from platform import system as system_name  # Returns the system/OS name
+
 __all__ = ['info()', 'is_connected()', 'ping()', 'connect_time()', 'internet()',
          'chek_speed', 'internet_and_speed()', 'cmd_ping()', 'cmd(command)',
          'ping_data(times_repeat, task_typ_print_to_print_and_return_and_return_for_only_return',
          'filter_regel(data) replace \\n with \n']
-def info():
-    '''this is a lib where you can chek or test your wifi if you need commands:
-    is_connected() = looks for you of your wifi is connected
-    sub() = pings your wifi 8 times and returns the results
-    ping() = pings your wifi one time to chek your connection
-    connect_time() = looks how fast your wifi connects
-    internet() = returns True if you have wifi and False if not
-    chek_speed() = looks how vast the wifi reponse on a opening of google.com
-    internet_and_speed() = chek of you have wifi and how fast
-    cmd_ping() = pings your wifi one time
-    cmd(command) = type a command that cmd need to do
-    ping_data(times, task) = returns all ping data times for how many times and if task is print he prints all results and always he returns the data
-    ping_data return list max_time, min_time, middel, totaal, procent, n_procent, aantal, int(aantal - faal), tt
-    not all of this will work on a apple or linux pc
-    all tings work only on windows'''
-    help_data = '''this is a lib where you can chek or test your wifi if you need commands:
-is_connected() = looks for you of your wifi is connected
-sub() = pings your wifi 8 times and returns the results
-ping() = pings your wifi one time to chek your connection
-connect_time() = looks how fast your wifi connects
-internet() = returns True if you have wifi and False if not
-chek_speed() = looks how vast the wifi reponse on a opening of google.com
-internet_and_speed() = chek of you have wifi and how fast
-cmd_ping() = pings your wifi one time
-cmd(command) = type a command that cmd need to do
-ping_data(times, task) = returns all ping data times for how many times and if task is print he prints all results and always he returns the data
-ping_data return list max_time, min_time, middel, totaal, procent, n_procent, aantal, int(aantal - faal), tt
-not all of this will work on a apple or linux pc
-all tings work only on windows'''
-    return help_data
+
+__author__ = "Matthijs990"
+
+__doc__ =     '''
+                  this is a lib where you can chek or test your wifi if you need commands:
+                  is_connected() = looks for you of your wifi is connected
+                      sub() = pings your wifi 8 times and returns the results
+                      ping() = pings your wifi one time to chek your connection
+                      connect_time() = looks how fast your wifi connects
+                      internet() = returns True if you have wifi and False if not
+                      chek_speed() = looks how vast the wifi reponse on a opening of google.com
+                      internet_and_speed() = chek of you have wifi and how fast
+                      cmd_ping() = pings your wifi one time
+                      cmd(command) = type a command that cmd need to do
+                      ping_data(times, task) = returns all ping data times for how many times and if task is print he prints all results and always he returns the data
+                      ping_data return list max_time, min_time, middel, totaal, procent, n_procent, aantal, int(aantal - faal), tt
+                      not all of this will work on a apple or linux pc
+                      all things work only on windows
+             '''
+
+
 def is_connected(hostname = "www.google.com"):
   try:
     # see if we can resolve the host name -- tells us if there is
@@ -47,16 +40,13 @@ def is_connected(hostname = "www.google.com"):
     s = socket.create_connection((host, 80), 2)
     return True
   except:
-     pass
      return False
 
-import subprocess
+
 def sub():
-    al = subprocess.call('ping -n 8 -l 1000 8.8.8.8')
     
-    return al
-from platform   import system as system_name  # Returns the system/OS name
-from subprocess import call   as system_call  # Execute a shell command
+    return subprocess.call('ping -n 8 -l 1000 8.8.8.8')
+
 
 def ping(host='8.8.8.8'):
     """
@@ -71,7 +61,7 @@ def ping(host='8.8.8.8'):
     command = ['ping', param, '1', host]
 
     # Pinging
-    return system_call(command) == 0
+    return subprocess.call(command) == 0
 
 #import time
 ...
@@ -86,8 +76,9 @@ def connect_time():
     s = socket.create_connection((host, 80), 2)
     after = _time.time()      # from Python 3.3 and above use after = time.perf_counter()
     return after - before
-  except:
-    return -1
+  except Exception as e:
+         raise Exception('Could not measure connect time')  from e
+
 def internet(host="8.8.8.8", port=53, timeout=3):
     """
     Host: 8.8.8.8 (google-public-dns-a.google.com)
@@ -101,19 +92,21 @@ def internet(host="8.8.8.8", port=53, timeout=3):
     except Exception as ex:
         print(ex)
         return False
+
 def chek_speed():
         '''voer de functie internet uit en vergelijk de tijd voor en na om te kijken welke vergelijking is'''
-        start = time()
+        start = _time.time()
         internet()
-        eind = time()
+        eind = _time.time()
         tijd = eind - start
-        start = time()
+        start = _time.time()
         ping()
-        eind = time()
+        eind = _time.time()
         tijd =  eind - start
         
         
         return tijd
+
 def internet_and_speed():
     return str('ineternet connection: ' + internet()) + ' time to ping 32 bytes of data ' + str(chek_speed())
 
@@ -123,7 +116,7 @@ def cmd_ping():
     get_it = True
     if internet() == True:
         try:
-            get_in = getstatusoutput('ping -n 1 -l 1000 8.8.8.8')
+            get_in = subprocess.getstatusoutput('ping -n 1 -l 1000 8.8.8.8')
         except Exception as ex:
             print(ex)
             get_it = False
@@ -132,8 +125,10 @@ def cmd_ping():
         get_in = None
         get_it = False
     return get_in
+
 def cmd(command):
-    return getstatusoutput(command)
+    return subprocess.getstatusoutput(command)
+
 def ping_data(aantal, taak):
     global get_it
     global get_in
@@ -206,6 +201,7 @@ def filter_regel(zinig):
     OUTPUT = OUTPUT.replace('\')', '')
     formatted_output = OUTPUT.replace('\\n', '\n')
     return formatted_output
+
 def data():
     return cmd('ping -n 10 -l 1000 8.8.8.8')
 
